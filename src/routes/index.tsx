@@ -138,11 +138,7 @@ function Index() {
               {categories.map((category) => (
                 <span
                   key={category}
-                  className={cn(
-                    "rounded-full px-2.5 py-0.5 font-medium",
-                    categoryStyles[category] ??
-                      "bg-secondary text-secondary-foreground"
-                  )}
+                  className="rounded-full bg-secondary px-2.5 py-0.5 font-medium text-secondary-foreground"
                 >
                   {category}
                 </span>
