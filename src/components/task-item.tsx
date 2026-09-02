@@ -11,8 +11,24 @@ interface TaskItemProps {
 
 const statusOptions: TaskStatus[] = ["not-started", "in-progress", "completed"];
 
+const statusClasses: Record<TaskStatus, { circle: string; select: string }> = {
+  "not-started": {
+    circle: "border-status-not-started text-status-not-started hover:bg-status-not-started/10",
+    select: "border-status-not-started text-status-not-started focus-visible:ring-status-not-started",
+  },
+  "in-progress": {
+    circle: "border-status-in-progress text-status-in-progress hover:bg-status-in-progress/10",
+    select: "border-status-in-progress text-status-in-progress focus-visible:ring-status-in-progress",
+  },
+  completed: {
+    circle: "border-status-completed bg-status-completed text-status-completed-foreground hover:bg-status-completed/90",
+    select: "border-status-completed text-status-completed focus-visible:ring-status-completed",
+  },
+};
+
 export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
   const isCompleted = task.status === "completed";
+  const statusStyle = statusClasses[task.status];
 
   return (
     <li
