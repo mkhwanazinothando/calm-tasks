@@ -95,9 +95,7 @@ export function ProgressStats({ tasks }: ProgressStatsProps) {
                 <Icon
                   className={cn(
                     "mb-1.5 h-5 w-5",
-                    status === "completed"
-                      ? "text-primary"
-                      : "text-muted-foreground"
+                    statusConfig[status].color
                   )}
                 />
                 <span className="text-xl font-semibold text-foreground">
