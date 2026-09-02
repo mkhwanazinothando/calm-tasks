@@ -14,7 +14,7 @@ interface TaskFormProps {
 
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
+  const [category, setCategory] = useState<string>(DEFAULT_CATEGORIES[0]);
   const [status, setStatus] = useState<TaskStatus>("not-started");
 
   const handleSubmit = (e: React.FormEvent) => {
