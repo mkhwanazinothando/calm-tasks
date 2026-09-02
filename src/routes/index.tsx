@@ -8,6 +8,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { ProgressStats } from "@/components/progress-stats";
 import { TaskForm } from "@/components/task-form";
 import { TaskList } from "@/components/task-list";
+import { categoryStyles } from "@/components/category-badge";
+import { cn } from "@/lib/utils";
 import { type Task, type TaskStatus, DEFAULT_CATEGORIES } from "@/types/task";
 
 export const Route = createFileRoute("/")({
@@ -138,7 +140,11 @@ function Index() {
               {categories.map((category) => (
                 <span
                   key={category}
-                  className="rounded-full bg-secondary px-2.5 py-0.5 font-medium text-secondary-foreground"
+                  className={cn(
+                    "rounded-full px-2.5 py-0.5 font-medium",
+                    categoryStyles[category] ??
+                      "bg-secondary text-secondary-foreground"
+                  )}
                 >
                   {category}
                 </span>
