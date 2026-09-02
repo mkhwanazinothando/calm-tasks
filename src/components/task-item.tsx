@@ -11,8 +11,24 @@ interface TaskItemProps {
 
 const statusOptions: TaskStatus[] = ["not-started", "in-progress", "completed"];
 
+const statusClasses: Record<TaskStatus, { circle: string; select: string }> = {
+  "not-started": {
+    circle: "border-status-not-started text-status-not-started hover:bg-status-not-started/10",
+    select: "border-status-not-started text-status-not-started focus-visible:ring-status-not-started",
+  },
+  "in-progress": {
+    circle: "border-status-in-progress text-status-in-progress hover:bg-status-in-progress/10",
+    select: "border-status-in-progress text-status-in-progress focus-visible:ring-status-in-progress",
+  },
+  completed: {
+    circle: "border-status-completed bg-status-completed text-status-completed-foreground hover:bg-status-completed/90",
+    select: "border-status-completed text-status-completed focus-visible:ring-status-completed",
+  },
+};
+
 export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
   const isCompleted = task.status === "completed";
+  const statusStyle = statusClasses[task.status];
 
   return (
     <li
@@ -32,9 +48,7 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
         aria-label={isCompleted ? "Mark as not started" : "Mark as completed"}
         className={cn(
           "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-          isCompleted
-            ? "border-primary bg-primary text-primary-foreground"
-            : "border-muted-foreground/30 hover:border-primary"
+          statusStyle.circle
         )}
       >
         {isCompleted && <Check className="h-3.5 w-3.5" />}
@@ -64,8 +78,9 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
           onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
           aria-label="Change task status"
           className={cn(
-            "h-9 rounded-lg border border-input bg-background px-2 text-sm text-foreground",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            "h-9 rounded-lg border bg-background px-2 text-sm transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            statusStyle.select
           )}
         >
           {statusOptions.map((s) => (

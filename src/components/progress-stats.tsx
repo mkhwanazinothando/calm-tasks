@@ -14,11 +14,11 @@ type StatusCounts = {
 
 const statusConfig: Record<
   TaskStatus,
-  { icon: typeof CheckCircle2; label: string; key: keyof StatusCounts }
+  { icon: typeof CheckCircle2; label: string; key: keyof StatusCounts; color: string }
 > = {
-  completed: { icon: CheckCircle2, label: STATUS_LABELS.completed, key: "completed" },
-  "in-progress": { icon: Clock, label: STATUS_LABELS["in-progress"], key: "inProgress" },
-  "not-started": { icon: Circle, label: STATUS_LABELS["not-started"], key: "notStarted" },
+  completed: { icon: CheckCircle2, label: STATUS_LABELS.completed, key: "completed", color: "text-status-completed" },
+  "in-progress": { icon: Clock, label: STATUS_LABELS["in-progress"], key: "inProgress", color: "text-status-in-progress" },
+  "not-started": { icon: Circle, label: STATUS_LABELS["not-started"], key: "notStarted", color: "text-status-not-started" },
 };
 
 export function ProgressStats({ tasks }: ProgressStatsProps) {
@@ -61,7 +61,7 @@ export function ProgressStats({ tasks }: ProgressStatsProps) {
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
-                className="text-primary transition-all duration-500 ease-out"
+                className="text-status-completed transition-all duration-500 ease-out"
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
@@ -95,9 +95,7 @@ export function ProgressStats({ tasks }: ProgressStatsProps) {
                 <Icon
                   className={cn(
                     "mb-1.5 h-5 w-5",
-                    status === "completed"
-                      ? "text-primary"
-                      : "text-muted-foreground"
+                    statusConfig[status].color
                   )}
                 />
                 <span className="text-xl font-semibold text-foreground">

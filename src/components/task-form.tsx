@@ -3,6 +3,15 @@ import { Plus } from "lucide-react";
 import { DEFAULT_CATEGORIES, type TaskStatus } from "@/types/task";
 import { cn } from "@/lib/utils";
 
+const statusStyle = (status: TaskStatus) =>
+  cn(
+    "h-11 w-full rounded-xl border bg-background px-3 text-sm transition-colors",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    status === "not-started" && "border-status-not-started text-status-not-started",
+    status === "in-progress" && "border-status-in-progress text-status-in-progress",
+    status === "completed" && "border-status-completed text-status-completed"
+  );
+
 interface TaskFormProps {
   onAddTask: (task: {
     title: string;
@@ -96,10 +105,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
               id="task-status"
               value={status}
               onChange={(e) => setStatus(e.target.value as TaskStatus)}
-              className={cn(
-                "h-11 w-full rounded-xl border border-input bg-background px-3 text-sm text-foreground",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              )}
+              className={statusStyle(status)}
             >
               <option value="not-started">Not Started</option>
               <option value="in-progress">In Progress</option>
