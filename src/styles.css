@@ -129,6 +129,14 @@
   --border: oklch(0.28 0.04 255);
   --input: oklch(0.28 0.04 255);
   --ring: var(--blue-400);
+
+  /* Status colors */
+  --status-completed: oklch(0.68 0.16 145);
+  --status-completed-foreground: oklch(0.15 0.04 255);
+  --status-in-progress: oklch(0.78 0.15 85);
+  --status-in-progress-foreground: oklch(0.25 0.02 85);
+  --status-not-started: oklch(0.68 0.19 25);
+  --status-not-started-foreground: oklch(1 0 0);
 }
 
 @layer base {
