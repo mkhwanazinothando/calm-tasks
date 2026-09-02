@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function getItem<T>(key: string, initialValue: T): T {
   if (typeof window === "undefined") return initialValue;
@@ -10,39 +10,50 @@ function getItem<T>(key: string, initialValue: T): T {
   }
 }
 
-function subscribe(callback: () => void) {
-  const handler = (event: StorageEvent) => {
-    if (event.storageArea === window.localStorage) {
-      callback();
-    }
-  };
-  window.addEventListener("storage", handler);
-  return () => window.removeEventListener("storage", handler);
-}
-
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  const getSnapshot = () => getItem<T>(key, initialValue);
-
-  const storedValue = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    () => initialValue
+  const [value, setValueState] = useState<T>(() =>
+    getItem(key, initialValue)
   );
 
-  const [value, setValue] = useState<T>(storedValue);
-
+  // Rehydrate when the key changes (e.g. across route mounts).
   useEffect(() => {
-    setValue(getItem(key, initialValue));
-  }, [key]);
+    setValueState(getItem(key, initialValue));
+  }, [key, initialValue]);
 
+  // Sync across browser tabs.
+  useEffect(() => {
+    const handler = (event: StorageEvent) => {
+      if (event.key === key && event.storageArea === window.localStorage) {
+        setValueState(
+          event.newValue ? (JSON.parse(event.newValue) as T) : initialValue
+        );
+      }
+    };
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
+  }, [key, initialValue]);
+
+  // Persist to localStorage whenever the value changes.
   useEffect(() => {
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
-      window.dispatchEvent(new StorageEvent("storage", { key }));
     } catch {
       // Ignore storage errors (e.g. private mode).
     }
   }, [key, value]);
+
+  const setValue = useCallback(
+    (newValue: T | ((prev: T) => T)) => {
+      setValueState((prev) => {
+        const resolved =
+          typeof newValue === "function"
+            ? (newValue as (prev: T) => T)(prev)
+            : newValue;
+        return resolved;
+      });
+    },
+    []
+  );
 
   return [value, setValue] as const;
 }
