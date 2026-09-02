@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { ProgressStats } from "@/components/progress-stats";
 import { TaskForm } from "@/components/task-form";
 import { TaskList } from "@/components/task-list";
+import { categoryStyles } from "@/components/category-badge";
 import { type Task, type TaskStatus, DEFAULT_CATEGORIES } from "@/types/task";
 
 export const Route = createFileRoute("/")({
