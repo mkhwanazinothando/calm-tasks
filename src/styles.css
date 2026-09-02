@@ -53,6 +53,13 @@
   --color-blue-800: var(--blue-800);
   --color-blue-900: var(--blue-900);
   --color-blue-950: var(--blue-950);
+
+  --color-status-completed: var(--status-completed);
+  --color-status-completed-foreground: var(--status-completed-foreground);
+  --color-status-in-progress: var(--status-in-progress);
+  --color-status-in-progress-foreground: var(--status-in-progress-foreground);
+  --color-status-not-started: var(--status-not-started);
+  --color-status-not-started-foreground: var(--status-not-started-foreground);
 }
 
 :root {
