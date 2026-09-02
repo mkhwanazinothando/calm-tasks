@@ -48,9 +48,7 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
         aria-label={isCompleted ? "Mark as not started" : "Mark as completed"}
         className={cn(
           "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-          isCompleted
-            ? "border-primary bg-primary text-primary-foreground"
-            : "border-muted-foreground/30 hover:border-primary"
+          statusStyle.circle
         )}
       >
         {isCompleted && <Check className="h-3.5 w-3.5" />}
