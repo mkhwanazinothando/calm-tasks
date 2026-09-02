@@ -98,6 +98,14 @@
   --border: var(--blue-200);
   --input: var(--blue-200);
   --ring: var(--blue-400);
+
+  /* Status colors */
+  --status-completed: oklch(0.58 0.16 145);
+  --status-completed-foreground: oklch(1 0 0);
+  --status-in-progress: oklch(0.72 0.15 85);
+  --status-in-progress-foreground: oklch(0.25 0.02 85);
+  --status-not-started: oklch(0.58 0.19 25);
+  --status-not-started-foreground: oklch(1 0 0);
 }
 
 .dark {
