@@ -6,9 +6,15 @@ interface ProgressStatsProps {
   tasks: Task[];
 }
 
+type StatusCounts = {
+  completed: number;
+  inProgress: number;
+  notStarted: number;
+};
+
 const statusConfig: Record<
   TaskStatus,
-  { icon: typeof CheckCircle2; label: string; key: keyof typeof counts }
+  { icon: typeof CheckCircle2; label: string; key: keyof StatusCounts }
 > = {
   completed: { icon: CheckCircle2, label: STATUS_LABELS.completed, key: "completed" },
   "in-progress": { icon: Clock, label: STATUS_LABELS["in-progress"], key: "inProgress" },
@@ -16,7 +22,7 @@ const statusConfig: Record<
 };
 
 export function ProgressStats({ tasks }: ProgressStatsProps) {
-  const counts = {
+  const counts: StatusCounts = {
     completed: tasks.filter((t) => t.status === "completed").length,
     inProgress: tasks.filter((t) => t.status === "in-progress").length,
     notStarted: tasks.filter((t) => t.status === "not-started").length,
